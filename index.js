@@ -1,6 +1,6 @@
 // expecting time to be a string in the format like '8:15' or '12:30'
 const digitToName = {
-  0: "zero",
+  0: "midnight",
   1: "one",
   2: "two",
   3: "three",
@@ -50,27 +50,27 @@ function convertTimeToWords(time) {
   if (firstHalf === 12 && secondHalf === 0){
     return "midday"
   }
-  
-  let secondHalfString = String(digitToName[secondHalf]) + " past "
-  if (secondHalf > 30) {
-    secondHalfString = String(digitToName[60 - secondHalf]) + " to "
-    firstHalf = firstHalf + 1
-    if (firstHalf === 24){
-      firstHalf = 0
+
+  let fristHalfString = digitToName[firstHalf];
+  let secondHalfString = "";
+  if (secondHalf === 0) {
+    return fristHalfString + " o'clock";
+  } else if (secondHalf <= 30) {
+    secondHalfString = digitToName[secondHalf] + " past";
+    if (firstHalf == 12){
+      fristHalfString = "midday"
+    }
+  } else {
+    secondHalfString = digitToName[60 - secondHalf] + " to";
+    fristHalfString = digitToName[(firstHalf + 1)];
+    if (firstHalf == 23){
+      fristHalfString = digitToName[0];
+    }
+    if (firstHalf == 11){
+      fristHalfString = "midday";
     }
   }
-  let fristHalfString = String(digitToName[firstHalf])
-  if (secondHalf === 0){
-    secondHalfString = ""
-    fristHalfString = fristHalfString + " o'clock"
-  }
-
-  if (firstHalf === 12){
-    fristHalfString = "midday"
-  }
-  
-  stringTime = secondHalfString + fristHalfString
-  return stringTime;
+  return secondHalfString + " " + fristHalfString;
 }
 
 module.exports = { convertTimeToWords };

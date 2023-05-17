@@ -45,4 +45,9 @@ describe('Time to words', () => {
     const timeInWords = convertTimeToWords('2:30');
     expect(timeInWords).toBe("half past two");
   });
+
+  it('Handles times at 15 to midnight - 23:45', () => {
+    const timeInWords = convertTimeToWords('23:45');
+    expect(timeInWords).toBe("quarter to midnight");
+  });
 });
